@@ -7,7 +7,6 @@ export class EmbeddedWorkflowStart extends LitElement {
         return {
             startRun: { type: Boolean },
             targetGuid: { type: String },
-            value: {type: String},
           };
     }
 
@@ -42,13 +41,6 @@ export class EmbeddedWorkflowStart extends LitElement {
                 targetGuid: {
                     type: 'string',
                     title: "The guid to set for the new record",
-                },
-                value: {
-                    value: {
-                    type: 'string',
-                    title: 'Value',
-                    isValueField: true,
-                    },
                 },
             },
             //Triggers an event that the Nintex form can handle
@@ -116,7 +108,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
     // Render the UI as a function of component state
     render() {
-        return html`<input type="text" id="startComponentControl">${this.targetGuid}</p>`
+        return html`<p id="startComponentControl">${this.targetGuid}</p>`
     }
 }
 
