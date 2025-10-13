@@ -41,8 +41,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 },
                 value: {
                     type: 'string',
-                    title: "Target GUID",
-                    description: "The guid to set for the new record",
+                    title: "Value",
                     IsValueField: true
                 },
             },
@@ -111,7 +110,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
     // Render the UI as a function of component state
     render() {
-        return html`<mwc-textfield id="startComponentControl">${this.value}</mwc-textfield>`
+        return html`<mwc-textfield id="textfield">${this.value}</mwc-textfield>`
     }
 }
 
