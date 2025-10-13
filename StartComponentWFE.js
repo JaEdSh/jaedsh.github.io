@@ -46,8 +46,11 @@ export class EmbeddedWorkflowStart extends LitElement {
                 },
             },
             //Triggers an event that the Nintex form can handle
-            events: ["ntx-value-change"]
-
+            events: ["ntx-value-change"],
+            standardProperties: {
+                readOnly: true,
+                description: true,
+            }
         };
     }
     //Only start the API request if the startRun (Execute Event on the form) has been set to true
@@ -70,7 +73,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 bubbles: true,
                 cancelable: false,
                 composed: true,
-                detail: inputE,
+                detail: this.value,
             };
             const event = new CustomEvent('ntx-value-change', args);
             this.dispatchEvent(event);
