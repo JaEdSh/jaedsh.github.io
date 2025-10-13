@@ -7,6 +7,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         return {
             startRun: { type: Boolean },
             targetGuid: { type: String },
+            value: { type: String },
           };
     }
 
@@ -38,9 +39,11 @@ export class EmbeddedWorkflowStart extends LitElement {
                     type: 'string',
                     title: 'Nintex API Key',
                 },
-                targetGuid: {
+                value: {
                     type: 'string',
-                    title: "The guid to set for the new record",
+                    title: "Target GUID",
+                    description: "The guid to set for the new record",
+                    IsValueField: true
                 },
             },
             //Triggers an event that the Nintex form can handle
@@ -55,7 +58,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
-                   // this.targetGuid = crypto.randomUUID();
+                    this.value = crypto.randomUUID();
                     this.load();
                 }
             }
@@ -108,7 +111,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
     // Render the UI as a function of component state
     render() {
-        return html`<p id="startComponentControl">${this.targetGuid}</p>`
+        return html`<mwc-textfield id="startComponentControl">${this.value}</mwc-textfield>`
     }
 }
 
