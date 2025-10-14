@@ -6,8 +6,7 @@ export class EmbeddedWorkflowStart extends LitElement {
     static get properties() {
         return {
             startRun: { type: Boolean },
-            targetGuid: { type: String },
-            value: { type: String },
+            value: { type: String }
           };
     }
 
@@ -42,6 +41,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 value: {
                     type: 'string',
                     title: "Value",
+                    maxLength: 255,
                     IsValueField: true
                 },
             },
@@ -67,7 +67,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         }
     }
 
-    onChange(inputE) {
+    onChange() {
         if (this.startRun != null) {
             const args = {
                 bubbles: true,
@@ -102,7 +102,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         //Wait for api response
         const jsonSubmit = await submit.json();
         console.log(jsonSubmit);
-        this.onChange(jsonSubmit.id);
+        this.onChange();
     }
 
     constructor() {
