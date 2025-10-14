@@ -60,7 +60,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
-                    this.value = crypto.randomUUID();
+                    //this.value = crypto.randomUUID();
                     this.load();
                 }
             }
@@ -85,7 +85,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
         const submitBody = {
             "startData": {
-                "se_recordguid": this.targetGuid,
+                "se_recordguid": this.value,
             }
         }
 
