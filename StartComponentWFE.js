@@ -6,7 +6,7 @@ export class EmbeddedWorkflowStart extends LitElement {
     static get properties() {
         return {
             startRun: { type: Boolean },
-            value: { type: String }
+            value: { type: String },
           };
     }
 
@@ -57,8 +57,8 @@ export class EmbeddedWorkflowStart extends LitElement {
     }
     //Only start the API request if the startRun (Execute Event on the form) has been set to true
     updated(changedProperties) {
+        console.log('changedProperties: ' + changedProperties.toString());
         if (changedProperties.has('startRun')) {
-            console.log('changedProperties: ' + changedProperties.toString());
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
