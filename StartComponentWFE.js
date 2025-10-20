@@ -91,7 +91,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
         console.log(submitBody);
         //Start the workflow
-        const submit = await fetch(this.targetAPIURL + 'workflows/v1/designs/' + this.workflowID + '/instances?token=' + this.targetAPIKey,
+        const submit = await fetch(this.targetAPIURL + 'api/v1/published/' + this.workflowID + '/instances?token=' + this.targetAPIKey,
             {
                 method: 'POST',
                 headers: {
