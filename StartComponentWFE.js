@@ -56,7 +56,7 @@ export class EmbeddedWorkflowStart extends LitElement {
     //Only start the API request if the startRun (Execute Event on the form) has been set to true
     updated(changedProperties) {
         if (changedProperties.has('startRun')) {
-            console.log(changedProperties);
+            console.log('changedProperties: ' + changedProperties);
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
@@ -87,11 +87,11 @@ export class EmbeddedWorkflowStart extends LitElement {
             "startData": {
                 "se_recordguid": this.value,
             }
-        }
+        };
 
-        console.log(submitBody);
+        console.log('submitBody: ' + submitBody);
         //Start the workflow
-        console.log(this.targetAPIURL + 'api/v1/workflow/published/' + this.workflowID + '/instances?token=' + this.targetAPIKey);
+        console.log('URL: ' + this.targetAPIURL + 'api/v1/workflow/published/' + this.workflowID + '/instances?token=' + this.targetAPIKey);
         const submit = await fetch(this.targetAPIURL + 'api/v1/workflow/published/' + this.workflowID + '/instances?token=' + this.targetAPIKey,
             {
                 method: 'POST',
@@ -102,7 +102,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             });
         //Wait for api response
         const jsonSubmit = await submit.json();
-        console.log(jsonSubmit);
+        console.log('jsonSubmit: ' + jsonSubmit.toString());
         this.waitForComplete(jsonSubmit.id);
     }
 
@@ -115,11 +115,11 @@ export class EmbeddedWorkflowStart extends LitElement {
             try {
                 const response = await fetch(this.targetAPIURL + 'workflows/v2/instances/' + instanceId,
                     {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + authToken,
+                            'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(submitBody)
                 });
                 const data = await response.json();
 
@@ -149,7 +149,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             "grant_type": "client_credentials"
         }
 
-        console.log(submitBody);
+        console.log('authBody' + authBody);
         //Start the workflow
         const authSubmit = await fetch(this.targetAPIURL + 'authentication/v1/token',
             {
@@ -161,7 +161,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             });
         //Wait for api response
         const authJson = await authSubmit.json();
-        console.log(authJson);
+        console.log('authJson' + authJson);
         return authJson.access_token;
     }
     constructor() {
