@@ -23,7 +23,8 @@ export class EmbeddedWorkflowStart extends LitElement {
             properties: {
                 workflowID: {
                     type: 'string',
-                    title: 'Workflow ID'
+                    title: 'Workflow ID',
+                    description: 'A GUID for the workflow definition.'
                 },
                 startRun: {
                     type: 'boolean',
@@ -32,7 +33,8 @@ export class EmbeddedWorkflowStart extends LitElement {
                 },
                 targetAPIURL: {
                     type: 'string',
-                    title: 'Nintex API workflow Endpoint URL',
+                    title: 'Nintex API workflow Endpoint Domain',
+                    description: 'https://nintex.workflowcloud.com/'
                 },
                 targetAPIKey: {
                     type: 'string',
@@ -56,7 +58,7 @@ export class EmbeddedWorkflowStart extends LitElement {
     //Only start the API request if the startRun (Execute Event on the form) has been set to true
     updated(changedProperties) {
         if (changedProperties.has('startRun')) {
-            console.log('changedProperties: ' + changedProperties);
+            console.log('changedProperties: ' + changedProperties.toString());
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
