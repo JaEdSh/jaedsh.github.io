@@ -91,7 +91,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
         console.log(submitBody);
         //Start the workflow
-        const submit = await fetch(this.targetAPIURL + this.workflowID + '/instances?token=' + this.targetAPIKey,
+        const submit = await fetch(this.targetAPIURL + 'workflows/v1/designs/' + this.workflowID + '/instances?token=' + this.targetAPIKey,
             {
                 method: 'POST',
                 headers: {
@@ -102,9 +102,67 @@ export class EmbeddedWorkflowStart extends LitElement {
         //Wait for api response
         const jsonSubmit = await submit.json();
         console.log(jsonSubmit);
-        this.onChange();
+        this.waitForComplete(jsonSubmit.id);
     }
 
+    async waitForComplete (instanceId, intervalMS = 100, maxAttempts = 20) {
+        var authToken = this.getPluginAuth();
+        return new Promise((resolve, reject) => {
+            const interval = setInterval(async () => {
+            attempts++;
+
+            try {
+                const response = await fetch(this.targetAPIURL + 'workflows/v2/instances/' + instanceId,
+                    {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(submitBody)
+                });
+                const data = await response.json();
+
+                console.log(`Attempt ${attempts}:`, data);
+
+                // Adjust path to the actual value in your response
+                if (data?.status === 'Completed') {
+                    clearInterval(interval);
+                    return resolve(true);
+                }
+
+                if (attempts >= maxAttempts) {
+                    clearInterval(interval);
+                    return reject(false);
+                }
+            } catch (err) {
+                console.error("Error calling service:", err);
+            }
+            }, intervalMS);
+        });
+    }
+    
+    async getPluginAuth () {
+        const authBody = {
+            "client_id": "14185b26-a7eb-4878-a18b-1555f73d7529",
+            "client_secret": "tRsQJNIKIM2DsIPtRS2NtR2HtSsJKOPRQMtWVsMtRsPtPsRtVsJRtUsPJPFJ2StTsFMRNMFtSsItRsR2KtRVSsL2CsPtWsK2X",
+            "grant_type": "client_credentials"
+        }
+
+        console.log(submitBody);
+        //Start the workflow
+        const authSubmit = await fetch(this.targetAPIURL + 'authentication/v1/token',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(authBody)
+            });
+        //Wait for api response
+        const authJson = await authSubmit.json();
+        console.log(authJson);
+        return authJson.access_token;
+    }
     constructor() {
         super();
     }
