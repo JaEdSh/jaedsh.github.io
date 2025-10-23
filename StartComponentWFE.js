@@ -62,7 +62,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
-                    //this.value = crypto.randomUUID();
+                    this.value = crypto.randomUUID();
                     this.load();
                 }
             }
@@ -103,6 +103,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 body: JSON.stringify(submitBody)
             });
         //Wait for api response
+        console.log("Pre-submit");
         const jsonSubmit = await submit.json();
         console.log('jsonSubmit: ' + jsonSubmit.toString());
         this.waitForComplete(jsonSubmit.id);
@@ -174,7 +175,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
     // Render the UI as a function of component state
     render() {
-        return html`<mwc-textfield id="textfield">${this.value}</mwc-textfield>`
+        return html`<p id="textfield">${this.value}</p>`
     }
 }
 
