@@ -89,7 +89,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             "startData": {
                 "se_recordguid": this.value,
             }
-        };
+        }
 
         console.log('submitBody: ' + submitBody);
         //Start the workflow
