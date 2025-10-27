@@ -44,7 +44,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                     type: 'string',
                     title: "Value",
                     maxLength: 255,
-                    IsValueField: true
+                    isValueField: true
                 },
             },
             //Triggers an event that the Nintex form can handle
@@ -87,7 +87,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
         const submitBody = {
             "startData": {
-                "se_recordguid": this.value,
+                "se_recordguid": this.value.toString(),
             }
         }
 
