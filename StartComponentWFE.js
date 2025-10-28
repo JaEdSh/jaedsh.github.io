@@ -113,6 +113,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         var authToken = this.getPluginAuth();
         let attempts = 0;
         console.log(instanceId);
+        throw new Error("Make it stop");
         if (authToken == null) { 
             console.log("Token empty"); 
             return ("fail");
