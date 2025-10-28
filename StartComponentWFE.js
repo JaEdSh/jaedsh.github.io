@@ -106,11 +106,12 @@ export class EmbeddedWorkflowStart extends LitElement {
         console.log("Pre-submit");
         const jsonSubmit = await submit.text();
         console.log('jsonSubmit: ' + jsonSubmit.toString());
-        this.waitForComplete(jsonSubmit.id);
+        this.waitForComplete(jsonSubmit);
     }
 
     async waitForComplete (instanceId, intervalMS = 100, maxAttempts = 20) {
         var authToken = this.getPluginAuth();
+        let attempts = 0;
         return new Promise((resolve, reject) => {
             const interval = setInterval(async () => {
             attempts++;
