@@ -113,7 +113,6 @@ export class EmbeddedWorkflowStart extends LitElement {
         var authToken = this.getPluginAuth();
         let attempts = 0;
         console.log(instanceId);
-        throw new Error("Make it stop");
         if (authToken == null) { 
             console.log("Token empty"); 
             return ("fail");
@@ -124,7 +123,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             attempts++;
 
             try {
-                const response = await fetch(this.targetAPIURL + 'workflows/v2/instances/' + instanceId,
+                const response = await fetch('https://us.nintex.io/' + 'workflows/v2/instances/' + instanceId,
                     {
                         method: 'GET',
                         headers: {
@@ -162,7 +161,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
         console.log('authBody' + authBody);
         //Start the workflow
-        const authSubmit = await fetch(this.targetAPIURL + 'authentication/v1/token',
+        const authSubmit = await fetch('https://us.nintex.io/' + 'authentication/v1/token',
             {
                 method: 'POST',
                 headers: {
@@ -173,8 +172,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         //Wait for api response
         const authJson = await authSubmit.json();
         console.log('authJson' + authJson.text);
-        throw new Error("Completed Auth");
-        //return authJson.access_token;
+        return authJson.access_token;
     }
     constructor() {
         super();
