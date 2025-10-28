@@ -104,7 +104,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             });
         //Wait for api response
         console.log("Pre-submit");
-        const jsonSubmit = await submit.json();
+        const jsonSubmit = await submit.text();
         console.log('jsonSubmit: ' + jsonSubmit.toString());
         this.waitForComplete(jsonSubmit.id);
     }
