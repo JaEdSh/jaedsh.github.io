@@ -173,7 +173,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         const authJson = await authSubmit.json();
         console.log('authJson' + authJson.text);
         throw new Error("Completed Auth");
-        return authJson.access_token;
+        //return authJson.access_token;
     }
     constructor() {
         super();
