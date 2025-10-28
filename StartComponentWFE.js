@@ -112,6 +112,12 @@ export class EmbeddedWorkflowStart extends LitElement {
     async waitForComplete (instanceId, intervalMS = 100, maxAttempts = 20) {
         var authToken = this.getPluginAuth();
         let attempts = 0;
+        console.log(instanceId);
+        if (authToken == null) { 
+            console.log("Token empty"); 
+            return ("fail");
+        }
+        else { console.log("Token retrieved"); }
         return new Promise((resolve, reject) => {
             const interval = setInterval(async () => {
             attempts++;
@@ -165,7 +171,8 @@ export class EmbeddedWorkflowStart extends LitElement {
             });
         //Wait for api response
         const authJson = await authSubmit.json();
-        console.log('authJson' + authJson);
+        console.log('authJson' + authJson.text);
+        throw new Error("Completed Auth");
         return authJson.access_token;
     }
     constructor() {
