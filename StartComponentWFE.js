@@ -49,7 +49,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 },
             },
             //Triggers an event that the Nintex form can handle
-            events: ["ntx-value-change"],
+            events: ["ntx-value-change", "update-complete"],
             standardProperties: {
                 readOnly: true,
                 description: true,
@@ -63,15 +63,29 @@ export class EmbeddedWorkflowStart extends LitElement {
             //Only runs if form control is true
             if (this.startRun != null) {
                 if (this.startRun == true) {
-                    this.value = crypto.randomUUID();
-                    this.load(this.value);
+                    let inputValue = crypto.randomUUID();
+                    this.load(inputValue);
                 }
+            }
+        }
+        else if (changedProperties.has('value')) {
+            if (inputValue != null) {
+                const args = {
+                    bubbles: true,
+                    cancelable: false,
+                    composed: true,
+                    detail: inputValue,
+                };
+                this.value = inputValue;
+                console.log("Event Created: " + this.value);
+                const event = new CustomEvent('ntx-value-change', args);
+                this.dispatchEvent(event);
             }
         }
     }
 
     onChange(inputValue) {
-        if (this.startRun != null) {
+        if (inputValue != null) {
             const args = {
                 bubbles: true,
                 cancelable: false,
@@ -80,7 +94,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             };
             this.value = inputValue;
             console.log("Event Created: " + this.value);
-            const event = new CustomEvent('ntx-value-change', args);
+            const event = new CustomEvent('update-complete', args);
             this.dispatchEvent(event);
         }
     }
@@ -157,7 +171,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 }
             } catch (err) {
                 console.error("Error calling service:", err);
-                return resolve(false);
+                return reject;
             }
             }, intervalMS);
         });
