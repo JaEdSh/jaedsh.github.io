@@ -68,20 +68,6 @@ export class EmbeddedWorkflowStart extends LitElement {
                 }
             }
         }
-        else if (changedProperties.has('value')) {
-            if (inputValue != null) {
-                const args = {
-                    bubbles: true,
-                    cancelable: false,
-                    composed: true,
-                    detail: inputValue,
-                };
-                this.value = inputValue;
-                console.log("Event Created: " + this.value);
-                const event = new CustomEvent('ntx-value-change', args);
-                this.dispatchEvent(event);
-            }
-        }
     }
 
     onChange(inputValue) {
