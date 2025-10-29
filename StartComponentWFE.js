@@ -161,11 +161,11 @@ export class EmbeddedWorkflowStart extends LitElement {
             }, intervalMS);
         });
         checkStatus.then((result) => {
-            console.log("Success");
+            console.log("Success: ", result);
             this.onChange(inputValue);
         })
         .catch((error) => {
-            console.log("Failed to complete.")
+            console.log("Failed to complete: ", error);
         });
     }
     
