@@ -64,32 +64,33 @@ export class EmbeddedWorkflowStart extends LitElement {
             if (this.startRun != null) {
                 if (this.startRun == true) {
                     this.value = crypto.randomUUID();
-                    this.load();
+                    this.load(this.value);
                 }
             }
         }
     }
 
-    onChange() {
+    onChange(inputValue) {
         if (this.startRun != null) {
             const args = {
                 bubbles: true,
                 cancelable: false,
                 composed: true,
-                detail: this.value,
+                detail: inputValue,
             };
+            this.value = inputValue;
             console.log("Event Created: " + this.value);
             const event = new CustomEvent('ntx-value-change', args);
             this.dispatchEvent(event);
         }
     }
 
-    async load() {
+    async load(inputValue) {
         //Create the body for starting the workflow
 
         const submitBody = {
             "startData": {
-                "se_recordguid": this.value.toString(),
+                "se_recordguid": inputValue.toString(),
             }
         }
 
@@ -161,7 +162,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         });
         checkStatus.then((result) => {
             console.log("Success");
-            this.onChange();
+            this.onChange(inputValue);
         })
         .catch((error) => {
             console.log("Failed to complete.")
