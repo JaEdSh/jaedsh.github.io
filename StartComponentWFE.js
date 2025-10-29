@@ -78,6 +78,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 composed: true,
                 detail: this.value,
             };
+            console.log("Event Created: " + this.value);
             const event = new CustomEvent('ntx-value-change', args);
             this.dispatchEvent(event);
         }
