@@ -7,8 +7,9 @@ export class EmbeddedWorkflowStart extends LitElement {
         return {
             startRun: { type: Boolean },
             value: { type: String },
-          };
-    }
+        }
+      };
+    
 
     static getMetaConfig() {
         // plugin contract information
@@ -109,7 +110,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         this.waitForComplete(jsonSubmit);
     }
 
-    async waitForComplete (instanceId, intervalMS = 500, maxAttempts = 20) {
+    async waitForComplete (instanceId, intervalMS = 1000, maxAttempts = 60) {
         let authToken;
         try {
             authToken = await this.getPluginAuth();
@@ -125,7 +126,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             return ("fail");
         }
         else { console.log("Token retrieved"); }
-        return new Promise((resolve, reject) => {
+        const checkStatus = new Promise((resolve, reject) => {
             const interval = setInterval(async () => {
             attempts++;
 
@@ -156,6 +157,13 @@ export class EmbeddedWorkflowStart extends LitElement {
                 console.error("Error calling service:", err);
             }
             }, intervalMS);
+        });
+        checkStatus.then((result) => {
+            console.log("Success");
+            this.onChange();
+        })
+        .catch((error) => {
+            console.log("Failed to complete.")
         });
     }
     
