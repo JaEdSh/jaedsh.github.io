@@ -109,10 +109,10 @@ export class EmbeddedWorkflowStart extends LitElement {
         console.log("Pre-submit");
         const jsonSubmit = await submit.text();
         console.log('jsonSubmit: ' + jsonSubmit.toString());
-        this.waitForComplete(jsonSubmit);
+        this.waitForComplete(jsonSubmit, inputValue);
     }
 
-    async waitForComplete (instanceId, intervalMS = 1000, maxAttempts = 60) {
+    async waitForComplete (instanceId, inputValue, intervalMS = 1000, maxAttempts = 60) {
         let authToken;
         try {
             authToken = await this.getPluginAuth();
@@ -157,6 +157,7 @@ export class EmbeddedWorkflowStart extends LitElement {
                 }
             } catch (err) {
                 console.error("Error calling service:", err);
+                return resolve(false);
             }
             }, intervalMS);
         });
