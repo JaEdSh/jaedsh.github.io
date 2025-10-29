@@ -94,8 +94,10 @@ export class EmbeddedWorkflowStart extends LitElement {
             };
             this.value = inputValue;
             console.log("Event Created: " + this.value);
-            const event = new CustomEvent('update-complete', args);
-            this.dispatchEvent(event);
+            const event = new CustomEvent('ntx-value-change', args);
+                this.dispatchEvent(event);
+            const updateEvent = new CustomEvent('update-complete', args);
+            this.dispatchEvent(updateEvent);
         }
     }
 
