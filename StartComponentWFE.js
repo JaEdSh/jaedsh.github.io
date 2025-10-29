@@ -110,9 +110,16 @@ export class EmbeddedWorkflowStart extends LitElement {
     }
 
     async waitForComplete (instanceId, intervalMS = 100, maxAttempts = 20) {
-        var authToken = this.getPluginAuth();
+        let authToken;
+        try {
+            authToken = await this.getPluginAuth();
+        }
+        catch (err) {
+            console.error("Error calling auth service:", err);
+        }
         let attempts = 0;
         console.log(instanceId);
+        console.log(authToken);
         if (authToken == null) { 
             console.log("Token empty"); 
             return ("fail");
@@ -141,9 +148,9 @@ export class EmbeddedWorkflowStart extends LitElement {
                     return resolve(true);
                 }
 
-                if (attempts >= maxAttempts) {
+                else if (attempts >= maxAttempts) {
                     clearInterval(interval);
-                    return reject(false);
+                    throw new Error("Workflow failed.");
                 }
             } catch (err) {
                 console.error("Error calling service:", err);
@@ -171,7 +178,7 @@ export class EmbeddedWorkflowStart extends LitElement {
             });
         //Wait for api response
         const authJson = await authSubmit.json();
-        console.log('authJson' + authJson.text);
+        console.log('authJson' + authJson.access_token);
         return authJson.access_token;
     }
     constructor() {
