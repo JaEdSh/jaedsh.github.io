@@ -109,7 +109,7 @@ export class EmbeddedWorkflowStart extends LitElement {
         this.waitForComplete(jsonSubmit);
     }
 
-    async waitForComplete (instanceId, intervalMS = 100, maxAttempts = 20) {
+    async waitForComplete (instanceId, intervalMS = 500, maxAttempts = 20) {
         let authToken;
         try {
             authToken = await this.getPluginAuth();
@@ -150,7 +150,7 @@ export class EmbeddedWorkflowStart extends LitElement {
 
                 else if (attempts >= maxAttempts) {
                     clearInterval(interval);
-                    throw new Error("Workflow failed.");
+                    throw new Error("Workflow failed. Too many attempts");
                 }
             } catch (err) {
                 console.error("Error calling service:", err);
